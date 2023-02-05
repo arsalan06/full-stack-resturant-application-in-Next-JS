@@ -1,0 +1,10 @@
+.pizzaDetail_main {
+    /* display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6rem; */
+    background-color: white;
+    width: 100%;
+    min-height: 100vh;
+  }
