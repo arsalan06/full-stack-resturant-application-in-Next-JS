@@ -1,10 +1,32 @@
 .pizzaDetail_main {
-    /* display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    padding: 6rem; */
-    background-color: white;
-    width: 100%;
-    min-height: 100vh;
-  }
+  background-color: white;
+  width: 100%;
+  min-height: 100vh;
+}
+.pizzaDetail_image_container {
+  position: relative;
+  margin-right: 40px;
+  cursor: pointer;
+}
+.pizzaDetail_image_tag {
+  position: absolute;
+  left: 25px;
+  color: white;
+  background-color: rgb(87, 86, 86);
+  padding: 2px 6px;
+  border-radius: 10px;
+}
+
+.pizzaDetail_PizzaImage_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+}
+.pizzaDetail_Info_container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* align-items: center; */
+  height: 80vh;
+}
