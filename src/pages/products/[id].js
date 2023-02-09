@@ -3,8 +3,11 @@ import axios from "axios";
 import Image from "next/image";
 import styles from "@/styles/PizzaDetail.module.css";
 import { Col, Layout, Row, Typography, Checkbox, Input, Button } from "antd";
+import { addProduct } from "../../../redux/cartSlice";
+import { useDispatch } from "react-redux";
 const { Title, Paragraph, Text } = Typography;
 export default function PizzaDetail({ pizzaDetail }) {
+  const dispatch = useDispatch();
   const [pizzaSize, setPizzaSize] = useState(0);
   const [pizzaPrice, setPizzaPrice] = useState(pizzaDetail.price[0]);
   const [extraOptions, setExtraOptions] = useState([]);
@@ -27,6 +30,12 @@ export default function PizzaDetail({ pizzaDetail }) {
       handlePizzaPrice(-option.price);
       setExtraOptions(extraOptions.filter((extra) => extra._id !== option._id));
     }
+  };
+  const handleAddToCart = () => {
+    dispatch( 
+    addProduct({...pizzaDetail, extraOptions, pizzaPrice, pizzaQuantity})
+
+     )
   };
   return (
     <Layout className={styles.pizzaDetail_main}>
@@ -129,6 +138,7 @@ export default function PizzaDetail({ pizzaDetail }) {
                   fontWeight: "bold",
                   marginLeft: "10px",
                 }}
+                onClick={handleAddToCart}
               >
                 Add To Card
               </Button>

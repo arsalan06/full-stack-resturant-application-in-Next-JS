@@ -1,0 +1,33 @@
+.Cart_main_container {
+  min-height: 100vh;
+  height: auto;
+  margin-top: 30px;
+}
+.Cart_row > th {
+  padding: 10px 25px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+.Cart_row > td {
+  padding: 10px 25px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+.Cart_payment_container{
+    background-color: #21110d;
+    padding: 15px 20px;
+}
+.Cart_payment_container_Text{
+    color: white;
+    font-weight: 700;
+}
+.Cart_ondelivery_button{
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: teal;
+}
+.Cart_checkout_button{
+    width: 100%;
+    margin-top: 10px;
+}

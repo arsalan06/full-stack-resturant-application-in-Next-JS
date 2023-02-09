@@ -7,6 +7,7 @@ import {
   MailOutlined,
   ShoppingCartOutlined,
 } from "@ant-design/icons";
+import Link from "next/link";
 const { Header, Content, Footer } = Layout;
 const Topbar = () => {
   const quantity = useSelector((state) => state.cart.quantity);
@@ -59,15 +60,16 @@ const Topbar = () => {
         />
         {/* <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} align=/> */}
         <Menu style={centerStyle} mode="horizontal">
-          <Menu.Item> Cookies </Menu.Item>
+          <Menu.Item> <Link href="/">Home</Link> </Menu.Item>
           <Menu.Item> Cookies </Menu.Item>
           <Menu.Item>
-            {" "}
-            <ShoppingCartOutlined /> <span>{quantity}</span>
+            <Link href="/Cart">
+            <ShoppingCartOutlined  className={styles.Topbar_cart_icon} style={{
+              fontSize:"30px"
+            }}/> <span className={styles.Topbar_cart_icon_counter}>{quantity}</span>
+            </Link>
           </Menu.Item>
-          {/* <Menu.Item style={rightStyle}> Right </Menu.Item> */}
         </Menu>
-        {/* </div> */}
       </Header>
     </Layout>
   );
