@@ -26,8 +26,12 @@
     margin-top: 10px;
     margin-bottom: 10px;
     color: teal;
+    font-weight: 700;
 }
 .Cart_checkout_button{
     width: 100%;
     margin-top: 10px;
+    font-weight: 700;
+    color: teal;
+
 }
