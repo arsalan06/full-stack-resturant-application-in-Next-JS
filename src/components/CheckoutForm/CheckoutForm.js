@@ -1,30 +1,46 @@
 import React from "react";
+import ReactDOM from "react-dom";
 import { loadStripe } from "@stripe/stripe-js";
-export async function CheckoutForm({lineItems}) {
-  console.log(lineItems);
-  console.log(lineItems);
-  console.log(lineItems);
-  let stripePromise = null;
-  const getStrip = () => {
-    if (!stripePromise) {
-      stripePromise = loadStripe(
-        process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
-      );
+import {
+  CardElement,
+  Elements,
+  ElementsConsumer,
+} from "@stripe/react-stripe-js";
+
+class CheckoutForm extends React.Component {
+  handleSubmit = async (event) => {
+    event.preventDefault();
+    const { stripe, elements } = this.props;
+
+    if (elements == null) {
+      return;
     }
-    return stripePromise;
-  };
-  const stripe = await getStrip();
-    await stripe.redirectToCheckout({
-      mode: "payment",
-      lineItems,
-      successUrl: `${window.location.origin}?session_id={CHECKOUT_SESSION_ID}`,
-      cancelUrl: window.location.origin,
+
+    const { error, paymentMethod } = await stripe.createPaymentMethod({
+      type: "card",
+      card: elements.getElement(CardElement),
     });
-//   await stripe.confirmPayment({
-//     //`Elements` instance that was used to create the Payment Element
-//     lineItems,
-//     confirmParams: {
-//       return_url: "https://example.com/order/123/complete",
-//     },
-//   });
+    console.log(paymentMethod);
+  };
+  render() {
+    const { stripe } = this.props;
+    return (
+      <form onSubmit={this.handleSubmit}>
+        <CardElement />
+        <button type="submit" disabled={!stripe}>
+          Pay
+        </button>
+      </form>
+    );
+  }
+}
+
+export default function InjectedCheckoutForm() {
+  return (
+    <ElementsConsumer>
+      {({ stripe, elements }) => (
+        <CheckoutForm stripe={stripe} elements={elements} />
+      )}
+    </ElementsConsumer>
+  );
 }

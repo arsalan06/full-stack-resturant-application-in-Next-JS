@@ -3,27 +3,31 @@ import { Col, Row, Typography, Table, Button } from "antd";
 const { Text, Title } = Typography;
 import { useDispatch, useSelector } from "react-redux";
 import styles from "@/styles/Cart.module.css";
-import { CheckoutForm } from "@/components/CheckoutForm/CheckoutForm";
+import CheckoutForm from "@/components/CheckoutForm/CheckoutForm";
 import Image from "next/image";
+import StripCheckout from "react-stripe-checkout";
+
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
+import InjectedCheckoutForm from "@/components/CheckoutForm/CheckoutForm";
 const Cart = () => {
+  // const stripePromise = loadStripe(
+  //   "https://"+process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
+  // );
   const stripePromise = loadStripe(
-    process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
+    `${process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY}`
   );
-  
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const cart = useSelector((state) => state.cart);
   const options = {
     // passing the client secret obtained from the server
-    clientSecret: process.env.NEXT_SECRET_STRIPE_SECRET_KEY,
+    // clientSecret: process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY,
   };
-  console.log("payment");
-  console.log("payment");
-  console.log(process.env.NEXT_SECRET_STRIPE_SECRET_KEY);
-  console.log(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
-  console.log(process.env.SECRET_KEY);
+  const handleToken = (token, addresses) => {
+    console.log(token);
+    console.log(addresses);
+  };
   return (
     <div className={styles.Cart_main_container}>
       <Row justify="center">
@@ -77,10 +81,19 @@ const Cart = () => {
                 <Button className={styles.Cart_ondelivery_button}>
                   CHASH ON DELIVERY
                 </Button>
-                {/* <Elements stripe={stripePromise} options={options}>
-                  <CheckoutForm />
-                </Elements> */}
-                 <Button className={styles.Cart_ondelivery_button} onClick={()=>{
+                {/* <StripCheckout
+                  stripeKey={process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY}
+                  token={handleToken}
+                  amount={productDetail.amount}
+                  name={productDetail.name}
+                  billingAddress
+                  shippingAddress
+                  currency="USD"
+                /> */}
+                <Elements stripe={stripePromise}>
+                  <InjectedCheckoutForm />
+                </Elements>
+                {/* <Button className={styles.Cart_ondelivery_button} onClick={()=>{
                   CheckoutForm({
                     lineItems:[{
                       price:"price_1MayY6I1ysbNcrp1yN7aXCe2",
@@ -89,7 +102,7 @@ const Cart = () => {
                   })
                  }}>
                   PAY
-                </Button>
+                </Button> */}
               </div>
             ) : (
               <Button
