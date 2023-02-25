@@ -10,6 +10,7 @@ import StripCheckout from "react-stripe-checkout";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import InjectedCheckoutForm from "@/components/CheckoutForm/CheckoutForm";
+import PreviewPage from "@/components/CheckoutForm/CheckoutButton";
 const Cart = () => {
   // const stripePromise = loadStripe(
   //   "https://"+process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
@@ -90,9 +91,10 @@ const Cart = () => {
                   shippingAddress
                   currency="USD"
                 /> */}
-                <Elements stripe={stripePromise}>
+                {/* <Elements stripe={stripePromise}>
                   <InjectedCheckoutForm />
-                </Elements>
+                </Elements> */}
+                <PreviewPage/>
                 {/* <Button className={styles.Cart_ondelivery_button} onClick={()=>{
                   CheckoutForm({
                     lineItems:[{
