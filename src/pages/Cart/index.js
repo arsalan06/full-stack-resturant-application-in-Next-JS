@@ -3,31 +3,40 @@ import { Col, Row, Typography, Table, Button } from "antd";
 const { Text, Title } = Typography;
 import { useDispatch, useSelector } from "react-redux";
 import styles from "@/styles/Cart.module.css";
-import CheckoutForm from "@/components/CheckoutForm/CheckoutForm";
 import Image from "next/image";
-import StripCheckout from "react-stripe-checkout";
-
+import CheckoutForm from "./checkoutForm";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-import InjectedCheckoutForm from "@/components/CheckoutForm/CheckoutForm";
-import PreviewPage from "@/components/CheckoutForm/CheckoutButton";
+import axios from "axios";
 const Cart = () => {
-  // const stripePromise = loadStripe(
-  //   "https://"+process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
-  // );
-  const stripePromise = loadStripe(
-    `${process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY}`
-  );
+  const stripePromise = loadStripe( process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY );
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
+  const [clientSecret, setClientSecret] = useState("");
   const cart = useSelector((state) => state.cart);
-  const options = {
-    // passing the client secret obtained from the server
-    // clientSecret: process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY,
+  const handleCheckOut = () => {
+    console.log("api call handler")
+    setOpen(true);
+    const data = {
+      name: "gggg",
+      total: "66666",
+    };
+    axios
+      .post("http://localhost:3000/api/create-payment-intent", { data })
+      .then((res) => {
+        console.log(res.data.clientSecret);
+        setClientSecret(res.data.clientSecret);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
-  const handleToken = (token, addresses) => {
-    console.log(token);
-    console.log(addresses);
+  const appearance = {
+    theme: "stripe",
+  };
+  const options = {
+    clientSecret,
+    appearance,
   };
   return (
     <div className={styles.Cart_main_container}>
@@ -82,37 +91,19 @@ const Cart = () => {
                 <Button className={styles.Cart_ondelivery_button}>
                   CHASH ON DELIVERY
                 </Button>
-                {/* <StripCheckout
-                  stripeKey={process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY}
-                  token={handleToken}
-                  amount={productDetail.amount}
-                  name={productDetail.name}
-                  billingAddress
-                  shippingAddress
-                  currency="USD"
-                /> */}
-                {/* <Elements stripe={stripePromise}>
-                  <InjectedCheckoutForm />
-                </Elements> */}
-                <PreviewPage/>
-                {/* <Button className={styles.Cart_ondelivery_button} onClick={()=>{
-                  CheckoutForm({
-                    lineItems:[{
-                      price:"price_1MayY6I1ysbNcrp1yN7aXCe2",
-                      quantity:1,
-                    }]
-                  })
-                 }}>
-                  PAY
-                </Button> */}
+                {clientSecret && (
+                  <Elements options={options} stripe={stripePromise}>
+                    <CheckoutForm />
+                  </Elements>
+                )}
               </div>
             ) : (
-              <Button
-                className={styles.Cart_checkout_button}
-                onClick={() => setOpen(true)}
+              <button
+                // className={styles.Cart_checkout_button}
+                onClick={handleCheckOut}
               >
                 CHECKOUT NOW!
-              </Button>
+              </button>
             )}
           </div>
         </Col>
