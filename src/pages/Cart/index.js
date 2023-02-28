@@ -14,6 +14,10 @@ const Cart = () => {
   const [open, setOpen] = useState(false);
   const [clientSecret, setClientSecret] = useState("");
   const cart = useSelector((state) => state.cart);
+  // useEffect(()=>{
+  //   document.getElementById("submit").style.width="100%"
+  // //  payButton.style.width="100%"
+  // },[clientSecret])
   const handleCheckOut = () => {
     console.log("api call handler")
     setOpen(true);
@@ -99,7 +103,7 @@ const Cart = () => {
               </div>
             ) : (
               <button
-                // className={styles.Cart_checkout_button}
+                className={styles.Cart_checkout_button}
                 onClick={handleCheckOut}
               >
                 CHECKOUT NOW!

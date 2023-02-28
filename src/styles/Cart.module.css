@@ -14,7 +14,7 @@
   border-bottom: 1px solid #ddd;
 }
 .Cart_payment_container{
-    /* background-color: #21110d; */
+    background-color: #21110d;
     padding: 15px 20px;
 }
 .Cart_payment_container_Text{
@@ -33,5 +33,6 @@
     margin-top: 10px;
     font-weight: 700;
     color: teal;
+    height: 30px;
 
 }
