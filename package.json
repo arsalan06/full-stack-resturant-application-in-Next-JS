@@ -12,12 +12,17 @@
     "@ant-design/icons": "^5.0.1",
     "@next/font": "13.1.5",
     "@reduxjs/toolkit": "^1.9.2",
-    "@stripe/react-stripe-js": "^1.16.4",
+    "@stripe/react-stripe-js": "^2.0.0",
     "@stripe/stripe-js": "^1.46.0",
+    "ant-design-pro": "^2.3.2",
     "antd": "^5.1.7",
     "axios": "^1.2.6",
+    "bcrypt": "^5.1.0",
+    "bcryptjs": "^2.4.3",
     "eslint": "8.32.0",
     "eslint-config-next": "13.1.5",
+    "js-cookie": "^3.0.1",
+    "jsonwebtoken": "^9.0.0",
     "mongoose": "^6.8.4",
     "next": "13.1.5",
     "react": "18.2.0",
@@ -26,6 +31,7 @@
     "react-stripe-checkout": "^2.6.3",
     "redux": "^4.2.1",
     "strip": "^3.0.0",
-    "stripe": "^11.11.0"
+    "stripe": "^11.11.0",
+    "validator": "^13.9.0"
   }
 }

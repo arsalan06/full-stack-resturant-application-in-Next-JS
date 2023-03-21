@@ -60,14 +60,26 @@ const Topbar = () => {
         />
         {/* <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} align=/> */}
         <Menu style={centerStyle} mode="horizontal">
-          <Menu.Item> <Link href="/">Home</Link> </Menu.Item>
+          <Menu.Item>
+            {" "}
+            <Link href="/">Home</Link>{" "}
+          </Menu.Item>
           <Menu.Item> Cookies </Menu.Item>
           <Menu.Item>
             <Link href="/Cart">
-            <ShoppingCartOutlined  className={styles.Topbar_cart_icon} style={{
-              fontSize:"30px"
-            }}/> <span className={styles.Topbar_cart_icon_counter}>{quantity}</span>
+              <ShoppingCartOutlined
+                className={styles.Topbar_cart_icon}
+                style={{
+                  fontSize: "30px",
+                }}
+              />{" "}
+              <span className={styles.Topbar_cart_icon_counter}>
+                {quantity}
+              </span>
             </Link>
+          </Menu.Item>
+          <Menu.Item>
+            <Link href="/login">Login</Link>
           </Menu.Item>
         </Menu>
       </Header>
