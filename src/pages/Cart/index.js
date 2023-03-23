@@ -8,18 +8,28 @@ import CheckoutForm from "./checkoutForm";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import axios from "axios";
-const Cart = () => {
-  const stripePromise = loadStripe( process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY );
+import withAuth from "../../middlewares/authMiddleware";
+function Cart() {
+  const stripePromise = loadStripe(
+    process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
+  );
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const [clientSecret, setClientSecret] = useState("");
+  const [totalAmount, setTotalAmount] = useState("");
   const cart = useSelector((state) => state.cart);
-  // useEffect(()=>{
-  //   document.getElementById("submit").style.width="100%"
-  // //  payButton.style.width="100%"
-  // },[clientSecret])
+  useEffect(() => {
+    let temTotalAmount=0;
+    if (cart) {
+      for (let i = 0; i < cart.products.length; i++) {
+        temTotalAmount += cart.products[i].pizzaPrice * cart.products[i].pizzaQuantity;
+      }
+      setTotalAmount(temTotalAmount)
+    }
+    console.log(totalAmount)
+  }, [cart]);
   const handleCheckOut = () => {
-    console.log("api call handler")
+    console.log("api call handler");
     setOpen(true);
     const data = {
       name: "gggg",
@@ -82,7 +92,7 @@ const Cart = () => {
           <div className={styles.Cart_payment_container}>
             <Title style={{ color: "white" }}>CART TOTAL</Title>
             <Typography className={styles.Cart_payment_container_Text}>
-              Subtotal:
+              Subtotal: {totalAmount}
             </Typography>
             <Typography className={styles.Cart_payment_container_Text}>
               Discount:
@@ -114,6 +124,8 @@ const Cart = () => {
       </Row>
     </div>
   );
-};
+}
 
-export default Cart;
+// Cart.middleware = [authMiddleware];
+
+export default withAuth(Cart);

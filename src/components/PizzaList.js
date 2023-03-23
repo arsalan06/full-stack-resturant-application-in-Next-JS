@@ -17,7 +17,7 @@ const PizzaList = ({ pizzaList }) => {
               <Image alt="example" width={100} height={150} src={item.img} />
             }
           >
-            <Meta title={item.desc} description="www.instagram.com" />
+            <Meta title={item.title} description={item.desc} />
           </Card>
         </Link>
       ))}

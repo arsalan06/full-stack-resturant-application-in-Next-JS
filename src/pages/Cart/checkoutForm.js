@@ -5,7 +5,7 @@ import {
   useStripe,
   useElements
 } from "@stripe/react-stripe-js";
-
+import styles from "@/styles/Cart.module.css";
 export default function CheckoutForm() {
   const stripe = useStripe();
   const elements = useElements();

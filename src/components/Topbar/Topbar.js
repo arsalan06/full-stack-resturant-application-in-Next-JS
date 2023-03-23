@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Breadcrumb, Layout, Menu, theme } from "antd";
+import { Breadcrumb, Layout, Menu, Button } from "antd";
 import styles from "../styles/Topbar.module.css";
 import { useSelector } from "react-redux";
 import {
@@ -8,10 +8,15 @@ import {
   ShoppingCartOutlined,
 } from "@ant-design/icons";
 import Link from "next/link";
+import Toaster from "../Toaster/Toaster";
+import { useRouter } from "next/router";
+import Cookies from "js-cookie";
 const { Header, Content, Footer } = Layout;
 const Topbar = () => {
+  const router = useRouter();
   const quantity = useSelector((state) => state.cart.quantity);
   const [current, setCurrent] = useState("mail");
+  const [showToaster, setShowToaster] = useState(false);
   const onClick = (e) => {
     console.log("click ", e);
     setCurrent(e.key);
@@ -38,6 +43,12 @@ const Topbar = () => {
       disabled: true,
     },
   ];
+  const message = "Please add at least one item";
+  const type = "info";
+  const handleLogout = () => {
+    Cookies.remove("token");
+    router.push("/");
+  };
   return (
     <Layout>
       <Header
@@ -66,7 +77,15 @@ const Topbar = () => {
           </Menu.Item>
           <Menu.Item> Cookies </Menu.Item>
           <Menu.Item>
-            <Link href="/Cart">
+            <span
+              onClick={() => {
+                if (quantity <= 0) {
+                  Toaster(message, type);
+                } else {
+                  router.push("/Cart");
+                }
+              }}
+            >
               <ShoppingCartOutlined
                 className={styles.Topbar_cart_icon}
                 style={{
@@ -76,10 +95,19 @@ const Topbar = () => {
               <span className={styles.Topbar_cart_icon_counter}>
                 {quantity}
               </span>
-            </Link>
+            </span>
           </Menu.Item>
           <Menu.Item>
-            <Link href="/login">Login</Link>
+            {/* <Link href="/login">Login</Link> */}
+            <Button type="primary" href="/login">
+              Login
+            </Button>
+          </Menu.Item>
+          <Menu.Item>
+            {/* <Link href="/login">Login</Link> */}
+            <Button type="primary" onClick={handleLogout}>
+              Logout
+            </Button>
           </Menu.Item>
         </Menu>
       </Header>
